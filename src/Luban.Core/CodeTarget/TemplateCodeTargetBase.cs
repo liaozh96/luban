@@ -91,6 +91,7 @@ public abstract class TemplateCodeTargetBase : CodeTargetBase
         {
             { "__ctx", ctx},
             { "__top_module", ctx.Target.TopModule },
+            { "__loader_name", ctx.Target.LoaderName },
             { "__manager_name", ctx.Target.Manager },
             { "__manager_name_with_top_module", TypeUtil.MakeFullName(ctx.TopModule, ctx.Target.Manager) },
             { "__name", bean.Name },

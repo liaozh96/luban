@@ -8,5 +8,7 @@ public class RawTarget
 
     public string TopModule { get; set; }
 
+    public string LoaderName { get; set; }
+
     public List<string> Groups { get; set; } = new();
 }

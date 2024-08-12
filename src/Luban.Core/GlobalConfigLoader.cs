@@ -41,6 +41,8 @@ public class GlobalConfigLoader : IConfigLoader
         public List<string> Groups { get; set; }
 
         public string TopModule { get; set; }
+
+        public string LoaderName { get; set; }
     }
 
     private class LubanConf
@@ -70,7 +72,7 @@ public class GlobalConfigLoader : IConfigLoader
         var configFileName = Path.GetFileName(fileName);
         var dataInputDir = Path.Combine(_curDir, globalConf.DataDir);
         List<RawGroup> groups = globalConf.Groups.Select(g => new RawGroup() { Names = g.Names, IsDefault = g.Default }).ToList();
-        List<RawTarget> targets = globalConf.Targets.Select(t => new RawTarget() { Name = t.Name, Manager = t.Manager, Groups = t.Groups, TopModule = t.TopModule }).ToList();
+        List<RawTarget> targets = globalConf.Targets.Select(t => new RawTarget() { Name = t.Name, Manager = t.Manager, Groups = t.Groups, TopModule = t.TopModule, LoaderName = t.LoaderName }).ToList();
 
         List<SchemaFileInfo> importFiles = new();
         foreach (var schemaFile in globalConf.SchemaFiles)
@@ -97,6 +99,6 @@ public class GlobalConfigLoader : IConfigLoader
             Targets = targets,
             Imports = importFiles,
         };
-    }
+    }   
 
 }
