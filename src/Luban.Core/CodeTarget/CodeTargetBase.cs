@@ -127,7 +127,7 @@ public abstract class CodeTargetBase : ICodeTarget
     public virtual void Handle(GenerationContext ctx, OutputFileManifest manifest)
     {
         var tasks = new List<Task<OutputFile>>();
-        tasks.Add(Task.Run(() =>
+        /*tasks.Add(Task.Run(() =>
         {
             var writer = new CodeWriter();
             GenerateTables(ctx, ctx.ExportTables, writer);
@@ -142,7 +142,7 @@ public abstract class CodeTargetBase : ICodeTarget
                 GenerateTable(ctx, table, writer);
                 return CreateOutputFile($"{GetFileNameWithoutExtByTypeName(table.FullName)}.{FileSuffixName}", writer.ToResult(FileHeader));
             }));
-        }
+        }*/
 
         foreach (var bean in ctx.ExportBeans)
         {
