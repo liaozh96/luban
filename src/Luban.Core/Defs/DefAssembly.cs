@@ -52,9 +52,28 @@ public class DefAssembly
             AddType(new DefEnum(e));
         }
 
+        HashSet<string> singleBean = new HashSet<string>();
+
+        foreach (var p in assembly.Tables)
+        {
+            if (p.Mode == Luban.Defs.TableMode.ONE)
+            {
+                singleBean.Add(p.ValueType);
+            }
+        }
+
         foreach (var b in assembly.Beans)
         {
-            AddType(new DefBean(b));
+            DefBean bean = new DefBean(b);
+            if (singleBean.Contains(b.FullName))
+            {
+                singleBean.Remove(b.Name);
+            }
+            else
+            {
+                bean.IsMultiRow = true;
+            }
+            AddType(bean);
         }
 
         foreach (var p in assembly.Tables)
@@ -63,6 +82,7 @@ public class DefAssembly
             AddType(table);
             AddCfgTable(table);
         }
+
 
         _targets.AddRange(assembly.Targets);
 
