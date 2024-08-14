@@ -2,7 +2,7 @@
 package {{__namespace_with_top_module}};
 {{~end~}}
 
-import {{__loader_name}}.AbstractBean;
+import {{__loader_name}}.BaseTemplate;
 import {{__loader_name}}.annotation.TemplateLoader;
 import {{__loader_name}}.serialization.ByteBuf;
 
@@ -14,8 +14,8 @@ import {{__loader_name}}.serialization.ByteBuf;
 {{~if __this.comment != '' ~}}
 /** {{escape_comment __this.comment}} */
 {{~end~}}
-@TemplateLoader(loadParam = "{{__name}}.bytes", isConstantTemplate = {{__this.is_multi_row}})
-public {{class_modifier __this}} class {{__name}} extends {{if parent_def_type}}{{__this.parent_def_type.full_name_with_top_module}}{{else}}AbstractBean{{end}} {
+@TemplateLoader(loadParam = "{{__name}}.bytes", isConstantTemplate = {{!__this.is_multi_row}})
+public {{class_modifier __this}} class {{__name}} extends {{if parent_def_type}}{{__this.parent_def_type.full_name_with_top_module}}{{else}}BaseTemplate{{end}} {
 
 {{~ for field in export_fields ~}}
 {{~if field.comment != '' ~}}
@@ -50,6 +50,11 @@ public {{class_modifier __this}} class {{__name}} extends {{if parent_def_type}}
     public {{declaring_type_name field.ctype}} {{getter_name field.name}}() { return this.{{format_field_name __code_style field.name}}; }
 
     {{~end~}}
+
+{{~if __this.is_multi_row~}}
+    @Override
+    public Integer getBaseTemplateKey() { return this.getId(); }
+{{~end~}}
 
 {{~if !__this.is_abstract_type~}}
     public static final int ID = {{__this.id}};
